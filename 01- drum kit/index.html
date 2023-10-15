@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 01 - Drumkit</title>
+  <style>
+    html {
+      background: url(ringo.webp) 50% no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      margin-top: 16vh;
+    }
+
+    @media (max-width: 600px) {
+      ul {
+        flex-direction: column;
+      }
+    }
+
+    li {
+      flex: 1 1 auto;
+    }
+
+    @media (min-width: 601px) {
+      li:not(:first-of-type) {
+        margin-left: -1px;
+      }
+    }
+
+    button {
+      width: 100%;
+      background-color: yellow;
+      color: black;
+      border: 1px solid black;
+      height: 5rem;
+      font-size: 1.4rem;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-variant: small-caps;
+      transition: all 200ms ease-in-out;
+    }
+
+    button:active,
+    button.active {
+      background-color: greenyellow;
+    }
+  </style>
+</head>
+<body>
+  <ul id="drumkit">
+  </ul>
+
+  <script>
+    const drumkit = document.getElementById("drumkit")
+
+    // sound pads
+    const pads = [
+      { sound: "clap", key: "a" },
+      { sound: "hihat", key: "s" },
+      { sound: "kick", key: "d" },
+      { sound: "openhat", key: "f" },
+      { sound: "boom", key: "g" },
+      { sound: "ride", key: "h" },
+      { sound: "snare", key: "j" },
+      { sound: "tom", key: "k" },
+      { sound: "tink", key: "l" },
+    ]
+
+    // create drumkit
+    pads.forEach(pad => {
+      drumkit.innerHTML += 
+        `<li><button data-sound="${pad.sound}" data-key='${pad.key}'>${pad.key} - ${pad.sound}</button></li>`
+    })
+
+    // play
+    const play = (sound) => {
+      console.log("play " + sound)
+      const audio = new Audio(`sounds/${sound}.wav`)
+      audio.play()
+    }
+
+    // handle click
+    drumkit.querySelectorAll("button").forEach(button => 
+      button.addEventListener("click", e => play(e.target.dataset.sound))
+    )
+
+    // handle keyup
+    document.addEventListener("keyup", key => { 
+      const pad = pads.find(p => p.key === key.key)
+      if (pad) {
+        drumkit.querySelector(`button[data-key="${pad.key}"]`).classList.add('active')
+        play(pad.sound)
+        setTimeout(
+          () => drumkit.querySelector(`button[data-key="${pad.key}"]`).classList.remove('active'),
+          200
+        )
+      }
+    })
+  </script>
+</body>
+</html>
