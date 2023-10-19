@@ -39,6 +39,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      margin-bottom: -5px; /* because i don't want to set parent line height to 0, has it loses the cool random effect */
     }
 
     p {
@@ -66,13 +67,10 @@
         opacity: 0;
         transition: 1000ms all ease-in;
       }
-
     
     li:hover p span:not(:nth-child(2)) {
       opacity: 1;
     }
-
-    
   </style>
 </head>
 <body>
