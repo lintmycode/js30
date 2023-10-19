@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 05 - Flex Panels</title>
+  <style>
+    html {
+      height: 100vh;
+    }
+
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    li {
+      position: relative;
+      flex: 1 1 0;
+      opacity: .9;
+      transition: 200ms all ease-in-out;
+    }
+
+      li:hover {
+        flex-basis: 40rem;
+        opacity: 1;
+      }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    p {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      margin: 0;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      font-size: 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      color: #ffff00;
+      height: 80%;
+      text-shadow: 0px -3px #aa0000;
+    }
+
+      p span:not(:nth-child(2)) {
+        display: block;
+        opacity: 0;
+        transition: 1000ms all ease-in;
+      }
+
+    
+    li:hover p span:not(:nth-child(2)) {
+      opacity: 1;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <ul>
+    <li><img src="images/1.jpg" alt="1"><p><span>On</span><span>The</span><span>Wildside</span></p></li>
+    <li><img src="images/2.jpg" alt="2"><p><span>I'm a</span><span>Wild</span><span>Child</span></p></li>
+    <li><img src="images/3.jpg" alt="3"><p><span>Wish</span><span>You</span><span>Were here</span></p></li>
+    <li><img src="images/4.jpg" alt="4"><p><span>The piano</span><span>Has</span><span>Been drinking</span></p></li>
+    <li><img src="images/5.jpg" alt="5"><p><span>Bobby Brown</span><span>Goes</span><span>Down</span></p></li>
+    <li><img src="images/6.jpg" alt="6"><p><span>God was</span><span>Never</span><span>On your side</span></p></li>
+  </ul>
+</body>
+</html>
