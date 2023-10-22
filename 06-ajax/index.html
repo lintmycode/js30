@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 06 - Ajax</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100vh;
+    }
+
+    #app {
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    input {
+      border: 1px solid #666;
+      padding: 2rem;
+      width: 100%;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      list-style: none;
+      margin: 4rem 0 0;
+      padding: 0;
+      display: flex;
+      gap: 2rem;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    li {
+      font-size: 1.4rem;
+      opacity: 1;
+      transition: all 100ms ease-out;
+    }
+    
+    li.leaving {
+      animation: leave;
+    }
+
+    @keyframes leave {
+      from {
+        font-size: 1.4rem;
+        opacity: 1;
+      }
+      to {
+        font-size: 0;
+      opacity: 0;
+      }
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" id="filter" name="filter" >
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    // get data
+    let cities = []
+    fetch('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json')
+      .then(data => data.json())
+      .then(data => {
+        cities = data
+        process()
+      })
+    
+    // filter and print data
+    let filter = ""
+    let processing = false
+    const process = () => {
+      if (processing) return
+      processing = true
+      let list = ""
+      cities
+        .filter(item => item.city.match(new RegExp(filter, "gi")) || item.state.match(new RegExp(filter, "gi")))
+        .forEach(item => list += `<li>${item.city} - ${item.state}</li>`)
+      document.getElementById("list").innerHTML = list
+      processing = false
+    }        
+        
+    // listen on the filter input
+    document.getElementById("filter").addEventListener("input", e => {
+      if (e.target.value.length < 3) filter = ""
+      else filter = e.target.value
+      process()
+    })
+
+    // focus on filter
+    document.getElementById("filter").focus()   
+  </script>
+</body>
+</html>
