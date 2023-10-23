@@ -7,10 +7,14 @@
   <style>
     * {
       box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     html {
       min-height: 100vh;
+      background-color: #222;
+      color: yellow;
     }
 
     #app {
@@ -18,11 +22,19 @@
       padding: 2rem;
     }
 
+    input, ul {
+      font-size: 1.4rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+    }
+
     input {
-      border: 1px solid #666;
+      border: 0;
       padding: 2rem;
       width: 100%;
-      font-size: 1.6rem;
+      background-color: yellow;
+      color: #222;
+      outline: none;
     }
 
     ul {
@@ -30,14 +42,15 @@
       margin: 4rem 0 0;
       padding: 0;
       display: flex;
-      gap: 2rem;
+      gap: 2rem 3rem;
       width: 100%;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: space-evenly;
     }
 
-    li {
-      font-size: 1.4rem;
+    li i {
+      background-color: green;
+      font-style: normal;
     }
     
   </style>
@@ -67,17 +80,22 @@
       let list = ""
       cities
         .filter(item => item.city.match(new RegExp(filter, "gi")) || item.state.match(new RegExp(filter, "gi")))
-        .forEach(item => list += `<li>${item.city} - ${item.state}</li>`)
+        .forEach(item => {
+          const content = `${item.city} - ${item.state}`
+          const match = filter.length ? new RegExp(filter, "gi") : null
+          list += `<li>${content.replace(match, `<i>${filter}</i>`)}</li>`
+        })
       document.getElementById("list").innerHTML = list
       processing = false
     }        
         
     // listen on the filter input
     document.getElementById("filter").addEventListener("input", e => {
-      if (e.target.value.length < 3) filter = ""
+      if (e.target.value.length < 2) filter = ""
       else filter = e.target.value
       process()
     })
+
 
     // focus on filter
     document.getElementById("filter").focus()   
