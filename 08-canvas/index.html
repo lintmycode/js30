@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 08 - Canvas</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="800" height="800"></canvas>
+
+  <script>
+    const canvas = document.querySelector('#canvas')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    const ctx = canvas.getContext('2d')
+    ctx.strokeStyle = '#000'
+    ctx.lineJoin = 'bevel'
+    ctx.lineCap = 'round'
+    // ctx.globalCompositeOperation = "destination-atop"; <3
+    // ctx.globalCompositeOperation = "copy";
+    // ctx.globalCompositeOperation = "difference"; // omg
+    ctx.globalCompositeOperation = "exclusion"; // omg
+    // ctx.globalCompositeOperation = "xor"; // omg
+
+
+    let isDrawing = false
+    let last = { x: 0, y: 0 }
+    ctx.lineWidth = 10
+    let hue = 0
+    let direction = 1
+
+    const draw = (e) => {
+      if (!isDrawing) return
+      ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+      ctx.beginPath()
+      ctx.moveTo(last.x, last.y)
+      ctx.lineTo(e.offsetX, e.offsetY)
+      ctx.stroke()
+      console.log(ctx.lineWidth)
+      direction = ctx.lineWidth >= 100 || ctx.lineWidth <= 1 ? direction * -1 : direction
+      ctx.lineWidth = ctx.lineWidth + 1 * direction
+      
+      hue = hue >= 360 ? 0 : hue + 1
+      resetCoordinates(e)
+    }
+  
+    const resetCoordinates = (e) => {
+      last.x = e.offsetX
+      last.y = e.offsetY
+    }
+    
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      resetCoordinates(e)
+    });
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+
+  </script>
+</body>
+</html>
