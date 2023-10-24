@@ -44,7 +44,7 @@
       ctx.moveTo(last.x, last.y)
       ctx.lineTo(e.offsetX, e.offsetY)
       ctx.stroke()
-      console.log(ctx.lineWidth)
+      
       direction = ctx.lineWidth >= 100 || ctx.lineWidth <= 1 ? direction * -1 : direction
       ctx.lineWidth = ctx.lineWidth + 1 * direction
       
