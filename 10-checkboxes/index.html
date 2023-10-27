@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 10 - Shift Checkboxes</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      background: #eee;
+    }
+
+    li {
+      display: flex;
+    }
+    
+    li:nth-child(even) {
+      background-color: #ddd;
+    }
+    
+    label {
+      flex: 1 1 auto;
+      padding: 1.4rem 0;
+      margin: 0 2rem 0 0;
+    }
+
+    input {
+      flex-basis: 2rem;
+      margin: 0 2rem;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <ul></ul>
+  </div>
+
+  <script>
+    const items = [
+      { checked: false, value: "Magna fugiat tempor magna tempor." },
+      { checked: false, value: "Deserunt ipsum laboris labore anim nisi." },
+      { checked: false, value: "Tempor dolor tempor ullamco ullamco eu sit." },
+      { checked: false, value: "Laborum enim mollit do ex aliquip labore excepteur excepteur consequat in." },
+      { checked: false, value: "Officia proident incididunt enim Lorem excepteur mollit fugiat in aliqua." },
+      { checked: false, value: "Fugiat et laborum in commodo labore tempor esse occaecat sit." },
+      { checked: false, value: "Qui et exercitation sunt anim non eu duis." },
+      { checked: false, value: "Esse magna labore magna minim tempor eu laborum adipisicing nostrud." },
+      { checked: false, value: "Tempor cillum officia mollit quis aute nisi enim consequat adipisicing est voluptate quis sit." },
+      { checked: false, value: "Do velit anim ipsum et Lorem cupidatat sunt elit." },
+      { checked: false, value: "Ipsum cillum nostrud velit ut tempor." },
+      { checked: false, value: "Eu nisi est aute in proident eu esse dolor veniam et consectetur id." },
+      { checked: false, value: "Voluptate in mollit sit in aliquip est velit quis dolore cupidatat incididunt." }
+    ]
+
+    document.querySelector("#app ul").innerHTML = items.reduce((acc, cur, index) => acc += `
+      <li>
+        <input type="checkbox" name="item-${index}" id="item-${index}" data-index="${index}">
+        <label for="item-${index}">${cur.value}</label>
+      </li>`, "")
+      
+    let hold = false
+    let lastIndex = -1
+
+    const update = index => {      
+      // if shift is down and isn't the first click
+      if (hold && lastIndex >= 0) {        
+        // update current item
+        items[index].checked = !items[index].checked
+
+        // find the range of items to update to the same value as the current item
+        const [ min, max ] = [ Math.min(index, lastIndex), Math.max(index, lastIndex) ]
+        items.filter((item, index) => index >= min && index <= max)
+          .forEach(item => item.checked = items[index].checked)
+
+        // update dom
+        document.querySelectorAll("input[type=checkbox]")
+        .forEach((input, index) => input.checked = items[index].checked)
+        
+      }
+      lastIndex = index 
+    }
+    
+    document.querySelectorAll("input[type=checkbox]")
+      .forEach(c => c.addEventListener("change", e => update(e.target.dataset.index)))
+    document.addEventListener("keydown", e => hold = e.key === "Shift" ? true : hold)
+    document.addEventListener("keyup", e => hold = e.key === "Shift" ? false : hold)
+  </script>
+</body>
+</html>
