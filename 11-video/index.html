@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 11 - Video player</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+      font-family: monospace;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+    }
+
+    video {
+      width: 100%;
+    }
+    
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 1rem;
+      align-items: center;
+      opacity: .3;
+      gap: 1rem 0;
+      margin-top: 1rem;
+      transition: all 100ms ease-in-out;
+    }
+    
+    nav:hover {
+      opacity: 1;
+    }
+    
+    .progress {
+      flex-basis: 100%;
+    }
+
+    button {
+      border: 1px solid #000;
+      background-color: #fff;
+      font-size: 1rem;
+      padding: 1rem;
+      transition: all 100ms ease-in-out;
+    }
+
+    button + button {
+      margin-left: -1px;
+    }
+    
+    button:active {
+      background-color: #222;
+      color: #fff;
+    }
+    
+    button.play {
+      flex-basis: 5rem;
+    }
+
+    .volume {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* input range mayhem */
+    input[type=range] {
+      appearance: none;
+      width: 100%;
+      margin: .8rem 0;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: .5rem;
+      background: #ddd;
+      border-radius: .5rem;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: #222;
+      cursor: pointer;
+      border-radius: 50%;
+      margin-top: -.5rem;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <video id="video" src="video.mp4"></video>
+    <nav>
+      <input id="progress" class="progress" type="range" min="0" max="" value="0">
+      <button id="prev" class="prev" onclick="jump(-10)">-10s</button>
+      <button id="play" class="play" onclick="play()" data-pause="pause" data-play="play">play</button>
+      <button id="pause" class="next" onclick="jump(10)">+10s</button>
+      <span class="volume">
+        <label for="volume">vol</label>
+        <input id="volume" type="range" min="0" max="1" step=".01" value=".9">
+      </span>
+    </nav>
+  </div>
+
+  <script>
+    // elements
+    const video = document.getElementById("video")
+    const playBtn = document.getElementById("play")
+    const progress = document.getElementById("progress")
+
+    // play / pause
+    let isPlaying = false
+    const play = () => {
+      isPlaying = !isPlaying
+      isPlaying ? video.play() : video.pause()
+      playBtn.innerHTML = isPlaying ? playBtn.dataset.pause : playBtn.dataset.play
+    }
+    
+    // jump n seconds
+    const jump = n => goto(Math.max(0, video.currentTime + n))
+
+    // go to time t
+    const goto = t => video.currentTime = t
+  
+    // jump to time on progress change
+    progress.addEventListener('input', e => goto(e.target.value))
+
+    // get video durantion and fire timeupdate event on player
+    video.addEventListener("loadedmetadata", () => progress.max = video.duration)
+    video.addEventListener("timeupdate", () => progress.value = video.currentTime)
+
+    // volume
+    document.getElementById('volume').addEventListener('input', e => video.volume = e.target.value);
+  </script>
+</body>
+</html>
