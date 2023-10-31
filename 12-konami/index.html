@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 12 - Konami</title>
+  <style>
+
+    html {
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      margin: 0;
+    }
+
+    body[data-unlocked=true] {
+      background-color: yellow;
+    } 
+
+    h1 {
+      font-family: 'Courier New', Courier, monospace;
+      color: #000;
+    }
+    
+  </style>
+</head>
+<body data-unloked>
+  <h1>unlocked</h1>
+
+  <script>
+    document.addEventListener("keyup", e => process(e.key))
+
+    let index = 0
+    const process = key => {
+      const code = [ "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", 
+        "ArrowRight", "ArrowLeft", "ArrowRight", "a", "b", "Enter" ]
+
+      index = code[index] === key ? index + 1 : 0
+      document.body.dataset.unlocked = index === code.length
+    }
+  </script>
+</body>
+</html>
