@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 13 - Slide Images</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+      background-color: #222;
+      color: #aaa;
+      font-family: monospace;
+    }
+
+    #app {
+      max-width: 80rem;
+      margin: 2rem auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 4rem 0;
+    }
+    
+    p {
+      display: flex;
+      gap: 2rem;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      line-height: 1.4;
+    }
+
+    p + p {
+      margin-top: 3rem;
+    }
+
+    p:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    img {
+      flex: 0 0 50%;
+      width: 50%;
+      height: 20rem;
+      object-fit: cover;
+      object-position: 50% 25%;
+      opacity: 0;
+      transition: all 500ms ease-in-out;
+    }
+
+    img.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Id nisi dolor velit Lorem.</h1>
+    <p>Consectetur id veniam occaecat incididunt labore labore. Ut Lorem in officia laboris ex fugiat pariatur excepteur 
+      mollit est. Quis amet magna excepteur proident qui reprehenderit veniam dolore ut commodo excepteur quis proident. 
+      Dolore ullamco dolore dolore sit ea mollit proident Lorem magna do. Ipsum consequat qui commodo voluptate qui. 
+      Ea incididunt id velit laborum eiusmod non nisi. Cillum adipisicing exercitation duis est excepteur non fugiat 
+      cupidatat consequat pariatur ad mollit dolor mollit.
+      <img src="images/1.jpg" alt="img1"></p>
+    <p>Tempor cupidatat anim elit aliquip ad velit mollit culpa ipsum aliqua. Nulla commodo ut labore fugiat enim 
+      nostrud ullamco. Voluptate occaecat eu aliqua enim incididunt sit irure sunt cupidatat consequat quis amet. 
+      Aliquip proident magna commodo duis ex cillum mollit esse nisi velit id adipisicing enim ea.
+      <img src="images/2.jpeg" alt="img2"></p>
+    <p>Est laborum exercitation fugiat non cupidatat irure et veniam id et adipisicing occaecat labore voluptate. 
+      Consectetur officia eu eiusmod minim ut aute dolore. Incididunt proident reprehenderit nulla nostrud dolore 
+      culpa duis adipisicing sit officia ullamco nulla. Culpa est anim cupidatat adipisicing Lorem non voluptate sunt 
+      enim commodo tempor id.
+      <img src="images/3.jpg" alt="img3"></p>
+    <p>Consectetur id veniam occaecat incididunt labore labore. Ut Lorem in officia laboris ex fugiat pariatur excepteur 
+      mollit est. Quis amet magna excepteur proident qui reprehenderit veniam dolore ut commodo excepteur quis proident. 
+      Dolore ullamco dolore dolore sit ea mollit proident Lorem magna do. Ipsum consequat qui commodo voluptate qui. 
+      Ea incididunt id velit laborum eiusmod non nisi. Cillum adipisicing exercitation duis est excepteur non fugiat 
+      cupidatat consequat pariatur ad mollit dolor mollit.
+      <img src="images/4.jpg" alt="img4"></p>
+    <p>Tempor cupidatat anim elit aliquip ad velit mollit culpa ipsum aliqua. Nulla commodo ut labore fugiat enim 
+      nostrud ullamco. Voluptate occaecat eu aliqua enim incididunt sit irure sunt cupidatat consequat quis amet. 
+      Aliquip proident magna commodo duis ex cillum mollit esse nisi velit id adipisicing enim ea.
+      <img src="images/5.png" alt="img5"></p>
+    <p>Est laborum exercitation fugiat non cupidatat irure et veniam id et adipisicing occaecat labore voluptate. 
+      Consectetur officia eu eiusmod minim ut aute dolore. Incididunt proident reprehenderit nulla nostrud dolore 
+      culpa duis adipisicing sit officia ullamco nulla. Culpa est anim cupidatat adipisicing Lorem non voluptate sunt 
+      enim commodo tempor id.
+      <img src="images/6.jpg" alt="img6"></p>
+          
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(entries => 
+      entries.forEach(e => e.target.classList.toggle("visible", e.isIntersecting)), 
+      { threshold: [0.3] })
+
+    document.querySelectorAll("img").forEach(img => observer.observe(img))
+    
+  </script>
+</body>
+</html>
