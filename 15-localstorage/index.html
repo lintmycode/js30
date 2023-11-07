@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 00 - Boilerplate</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <ul></ul>
+    <form onsubmit="addItem(event)">
+      <input type="text" name="new-item">
+      <button type="submit">+</button>
+      <button onclick="clearItems()">clear</button>
+    </form>
+  </div>
+
+  <script>
+    const defaultItems = [
+      { name: "Dog" },
+      { name: "Cat" },
+      { name: "Fish" },
+      { name: "Turtle" },
+    ]
+
+    let items = []
+
+    const save = items => localStorage.setItem('items', JSON.stringify(items))
+    const load = items => [...JSON.parse(localStorage.getItem('items')) || defaultItems]
+    const clearItems = () => { 
+      localStorage.clear() 
+      render(items = load(items))
+    }
+
+    const addItem = e => {
+      e.preventDefault()
+      const item = e.target.querySelector("input").value.trim()
+      
+      // do not add empty or repeated items
+      if (!item.length || items.find(i => i.name === item)) return
+      
+      render(items = [...items, { name: item, checked: true }])
+      save(items)
+
+      // reset input
+      e.target.querySelector("input").value = ""
+    }
+
+    const check = index => {
+      items[index].checked = !items[index].checked
+      save(items)
+    }
+
+    const render = (items) => document.querySelector("#app ul").innerHTML = 
+      items.reduce((acc, cur, index) => 
+        acc += `<li><input type="checkbox" id="item-${index}" onchange="check(${index})" 
+          value="${cur.name}" ${cur.checked ? "checked" : ""}>
+          <label for="item-${index}">${cur.name}</li>`, "")
+
+    render(items = load(items))
+
+  </script>
+</body>
+</html>
