@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 16 - Shadow moves</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+      background-color: #ff0;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 10rem;
+      font-weight: 700;
+      color: #f00;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>F*ck Off</h1>
+
+  <script>
+    document.addEventListener("mousemove", e =>
+      document.querySelector("h1").style.textShadow = 
+        `${(e.clientX - window.innerWidth / 2) / 50}px ${(e.clientY - window.innerHeight / 2) / 50}px #00f`)
+    
+  </script>
+</body>
+</html>
