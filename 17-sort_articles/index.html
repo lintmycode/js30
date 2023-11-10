@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS30 - 17 - Sort Articles</title>
+  <style>
+
+    html {
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    
+  </style>
+</head>
+<body>
+  <ul></ul>
+
+  <script>
+    const articles = ["A", "An", "The"]
+    const items = ["The Plot in You", "The Devil Wears Prada", "Pierce the Veil", "Norma Jean", 
+      "The Bled", "Say Anything", "The Midway State", "We Came as Romans", "Counterparts", 
+      "Oh, sleeper", "A Skylit Drive", "Anywhere But Here", "An Old Dog"]
+    
+    const process = (item, articleList) => {
+      // if list is done and no article was match, return the original item
+      if (articleList.length === 0) return item
+      
+      // get first article and remove it from the list
+      // if it's a match, return item without it
+      let head = articleList.shift()
+      if (item.split(" ")[0] === head) {
+        return item.slice(head.length + 1)
+      }
+
+      // keep going
+      return process(item, articleList)
+    }
+
+    // new array of filtered items from articles
+    // save index to use in the oiginal array and sort it
+    const processedItems = items
+      .map((item, index) => ({ title: process(item, [...articles]), index: index }))
+      .sort((a, b) => a.title < b.title ? -1 : 1)
+    
+    // print
+    document.querySelector("ul").innerHTML = processedItems.reduce((acc, cur) => 
+      acc += `<li>${items[cur.index]}</li>`, "")
+    
+    console.table(processedItems)
+  </script>
+</body>
+</html>
