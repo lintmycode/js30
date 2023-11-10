@@ -22,25 +22,32 @@
       "The Bled", "Say Anything", "The Midway State", "We Came as Romans", "Counterparts", 
       "Oh, sleeper", "A Skylit Drive", "Anywhere But Here", "An Old Dog"]
     
-    const process = (item, articleList) => {
-      // if list is done and no article was match, return the original item
-      if (articleList.length === 0) return item
+    // why was recursion my fist thought?
+    // const process = (item, articleList) => {
+    //   // if list is done and no article was match, return the original item
+    //   if (articleList.length === 0) return item
       
-      // get first article and remove it from the list
-      // if it's a match, return item without it
-      let head = articleList.shift()
-      if (item.split(" ")[0] === head) {
-        return item.slice(head.length + 1)
-      }
+    //   // get first article and remove it from the list
+    //   // if it's a match, return item without it
+    //   let head = articleList.shift()
+    //   if (item.split(" ")[0] === head) {
+    //     return item.slice(head.length + 1)
+    //   }
 
-      // keep going
-      return process(item, articleList)
-    }
+    //   // keep going
+    //   return process(item, articleList)
+    // }
+
+    const process = item => {
+      const article = articles.find(a => item.startsWith(`${a} `));
+      return article ? item.replace(`${article} `, '') : item;
+    };
 
     // new array of filtered items from articles
     // save index to use in the oiginal array and sort it
     const processedItems = items
-      .map((item, index) => ({ title: process(item, [...articles]), index: index }))
+      // .map((item, index) => ({ title: process(item, [...articles]), index }))
+      .map((item, index) => ({ title: process(item), index }))
       .sort((a, b) => a.title < b.title ? -1 : 1)
     
     // print
