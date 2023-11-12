@@ -80,8 +80,9 @@
   <script>
     // A
     const seconds = Array.from(document.querySelectorAll("li")).reduce((acc, cur) => {
-      const min = parseInt(cur.dataset.time.split(":")[0])
-      const sec = parseInt(cur.dataset.time.split(":")[1])
+      const [min, sec] = cur.dataset.time.split(":").map(n => parseInt(n, 10)) // ok
+      // const [min, sec] = cur.dataset.time.split(":").map(parseInt) // min ok, sec NaN
+      // const [min, sec] = cur.dataset.time.split(":").map(parseFloat) // ok
       return acc += min * 60 + sec
     }, 0)
 
