@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JS30 - 08 - Console Tricks</title>
+  <style>
+    html,
+    body {
+      min-height: 100vh;
+      margin: 0;
+    }    
+  </style>
 </head>
 <body>
-
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
-
+  <script src="../lib/console.js"></script>
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
-
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
 
     // Regular
     console.log('hello');
